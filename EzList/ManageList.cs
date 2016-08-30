@@ -11,7 +11,6 @@ using System.Windows.Forms;
 namespace EzList {
     public partial class ManageList : Form {
 
-        DataSet currentDS;
         private int rowIndex = 0;
         private int colIndex = 0;
 
@@ -30,7 +29,6 @@ namespace EzList {
             DataSet ds = new DataSet();
             ds.ReadXml(file);
             dataGridView1.DataSource = ds.Tables[0].DefaultView;
-            currentDS = ds;
         }
 
         // Clicked to load a XML file
@@ -89,7 +87,7 @@ namespace EzList {
         private void bindingNavigatorAddNewItem_Click_1(object sender, EventArgs e) {
             string colname = textBoxMan1.Text;
             try {
-                currentDS.Tables[0].Columns.Add(colname, typeof(System.String));
+                this.dataGridView1.Columns.Add(colname,colname);
             }
             catch {
                 label2.Text = "Name der Spalte ist schon vergeben!";
@@ -100,7 +98,7 @@ namespace EzList {
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e) {
             string colname = textBoxMan1.Text;
             try {
-                currentDS.Tables[0].Columns.Remove(colname);
+                this.dataGridView1.Columns.Remove(colname);
             }
             catch {
                 label2.Text = "Name der Spalte ist nicht vorhanden!";
@@ -139,7 +137,7 @@ namespace EzList {
         // Delete row
         private void Click1(object sender, EventArgs e) {
             try {
-                currentDS.Tables[0].Rows.RemoveAt(this.rowIndex);
+                this.dataGridView1.Rows.RemoveAt(this.rowIndex);
             }
             catch (IndexOutOfRangeException ex) {
                 label2.Text = "Kann nicht gelöscht werden!";
@@ -150,7 +148,7 @@ namespace EzList {
         // Delete column
         private void Click2(object sender, EventArgs e) {
             try {
-                currentDS.Tables[0].Columns.RemoveAt(this.colIndex);
+                this.dataGridView1.Columns.RemoveAt(this.colIndex);
             }
             catch (IndexOutOfRangeException ex){
                 label2.Text = "Kann nicht gelöscht werden!";
@@ -161,7 +159,7 @@ namespace EzList {
         // Change name
         private void Click3(object sender, EventArgs e) {
             try {
-                currentDS.Tables[0].Columns[colIndex].ColumnName = textBoxMan1.Text;
+                this.dataGridView1.Columns[colIndex].Name = textBoxMan1.Text;
             }
             catch (IndexOutOfRangeException ex) {
                 label2.Text = "Kann nicht geändert werden!";
@@ -178,7 +176,7 @@ namespace EzList {
 
             // Search columns
             for (int i = 0; i < cCount; i++) {
-                if ((currentDS.Tables[0].Columns[i].ColumnName).ToLower() == (textBoxMan1.Text).ToLower()) {
+                if ((this.dataGridView1.Columns[i].Name).ToLower() == (textBoxMan1.Text).ToLower()) {
                     label2.Text = "Ist Spaltenname von Spalte " + (i+1) + " !";
                     return;
                 }

@@ -11,7 +11,6 @@ using System.Windows.Forms;
 namespace EzList {
     public partial class NewList : Form {
 
-        DataSet currentDS;
 
         public NewList() {
             InitializeComponent();
@@ -29,7 +28,6 @@ namespace EzList {
             DataSet ds = new DataSet();
             ds.ReadXml(file);
             dataGridView1.DataSource = ds.Tables[0].DefaultView;
-            currentDS = ds;
 
         }
 
@@ -79,7 +77,7 @@ namespace EzList {
         private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e) {
             string colname = textBox1.Text;
             try {
-                currentDS.Tables[0].Columns.Add(colname, typeof(System.String));
+                this.dataGridView1.Columns.Add(colname, colname);
             }
             catch {
                 label3.Text = "Name der Spalte ist schon vergeben!";
@@ -90,7 +88,7 @@ namespace EzList {
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e) {
             string colname = textBox1.Text;
             try {
-                currentDS.Tables[0].Columns.Remove(colname);
+                this.dataGridView1.Columns.Remove(colname);
             }
             catch {
                 label3.Text = "Name der Spalte ist nicht vorhanden!";
@@ -101,7 +99,7 @@ namespace EzList {
         private void button2_Click(object sender, EventArgs e) {
             string colname = textBox1.Text;
             try {
-                currentDS.Tables[0].Columns.Add(colname, typeof(System.String));
+                this.dataGridView1.Columns.Add(colname, colname);
             }
             catch {
                 label3.Text = "Name der Spalte ist schon vergeben!";
